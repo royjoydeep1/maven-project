@@ -1,12 +1,21 @@
 pipeline {
     agent any
-    
-    tools {
+
+  tools {
         maven 'localMaven'
         jdk 'localJDK'
     }
-    
-    stages{
+
+    parameters {
+         string(name: 'tomcat_dev', defaultValue: '18.220.67.26', description: 'Staging Server')
+         string(name: 'tomcat_prod', defaultValue: '13.59.0.170', description: 'Production Server')
+    }
+
+    triggers {
+         pollSCM('* * * * *')
+     }
+
+stages{
         stage('Build'){
             steps {
                 sh 'mvn clean package'
@@ -18,6 +27,21 @@ pipeline {
                 }
             }
         }
-        
+
+        stage ('Deployments'){
+            parallel{
+                stage ('Deploy to Staging'){
+                    steps {
+                        sh "scp -i  **/target/*.war ec2-user@${params.tomcat_dev}:/var/lib/tomcat8/webapps"
+                    }
+                }
+
+                stage ("Deploy to Production"){
+                    steps {
+                        sh "scp -i  **/target/*.war ec2-user@${params.tomcat_prod}:/var/lib/tomcat8/webapps"
+                    }
+                }
+            }
+        }
     }
 }
