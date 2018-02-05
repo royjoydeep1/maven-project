@@ -32,6 +32,7 @@ stages{
             parallel{
                 stage ('Deploy to Staging'){
                     steps {
+                        sh "sudo ssh -i /home/ec2-user/TestDockerKey.pem ec2-user@{params.tomcat_dev}"
                         sh "scp -i /home/ec2-user/TestDockerKey.pem **/target/*.war ec2-user@${params.tomcat_dev}:/var/lib/tomcat8/webapps"
                         //sh "cp -i  /var/lib/jenkins/workspace/PipelineAsCodeExample/webapp/target/*.war /var/lib/tomcat8/webapps"
                     }
@@ -39,6 +40,7 @@ stages{
 
                 stage ("Deploy to Production"){
                     steps {
+                        sh "sudo ssh -i /home/ec2-user/TestDockerKey.pem ec2-user@{params.tomcat_prod}"
                         sh "scp -i /home/ec2-user/TestDockerKey.pem **/target/*.war ec2-user@${params.tomcat_prod}:/var/lib/tomcat8/webapps"
                          // sh "cp -i  /var/lib/jenkins/workspace/PipelineAsCodeExample/webapp/target/*.war /var/lib/tomcat8/webapps"
                     }
