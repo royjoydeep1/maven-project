@@ -33,14 +33,14 @@ stages{
                 stage ('Deploy to Staging'){
                     steps {
                         //sh "scp -i /home/ec2-user/TestDockerKey.pem **/target/*.war ec2-user@${params.tomcat_dev}:/var/lib/tomcat8/webapps"
-                        sh "cp -i  /var/lib/jenkins/workspace/PipelineAsCodeExample/webapp/target/*.war ec2-user@${params.tomcat_dev}:/var/lib/tomcat8/webapps"
+                        sh "cp -i  /var/lib/jenkins/workspace/PipelineAsCodeExample/webapp/target/*.war /var/lib/tomcat8/webapps"
                     }
                 }
 
                 stage ("Deploy to Production"){
                     steps {
                         //sh "scp -i /home/ec2-user/TestDockerKey.pem **/target/*.war ec2-user@${params.tomcat_prod}:/var/lib/tomcat8/webapps"
-                          sh "cp -i  /var/lib/jenkins/workspace/PipelineAsCodeExample/webapp/target/*.war ec2-user@${params.tomcat_prod}:/var/lib/tomcat8/webapps"
+                          sh "cp -i  /var/lib/jenkins/workspace/PipelineAsCodeExample/webapp/target/*.war /var/lib/tomcat8/webapps"
                     }
                 }
             }
