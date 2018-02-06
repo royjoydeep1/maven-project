@@ -44,9 +44,9 @@ stages{
                         
                         //sh "scp -i /home/ec2-user/TestDockerKey.pem **/target/*.war ec2-user@${params.tomcat_prod}:/var/lib/tomcat8/webapps"
                          // sh "cp -i  /var/lib/jenkins/workspace/PipelineAsCodeExample/webapp/target/*.war /var/lib/tomcat8/webapps"
-                        sh "sudo scp -i ~/TestDockerKey.pem /var/lib/jenkins/workspace/PipelineAsCodeExample/webapp/target/*.war ec2-user@${params.tomcat_prod}:/home/ec2-user/"
+                        sh "sudo scp -i ~/TestDockerKey.pem /var/lib/jenkins/workspace/PipelineAsCodeExample/webapp/target/*.war ec2-user@${params.tomcat_prod}:/home/ec2-user/ && ssh -i ~/TestDockerKey.pem ec2-user@${params.tomcat_prod}"
                         //sh "ssh -i ~/TestDockerKey.pem ec2-user@${params.tomcat_prod}"
-                        sh "sudo scp -i ~/TestDockerKey.pem ec2-user@${params.tomcat_prod}:/home/ec2-user/*.war ec2-user@${params.tomcat_prod}:/var/lib/tomcat8/webapps"
+                        sh "sudo scp -i ~/TestDockerKey.pem /home/ec2-user/*.war /var/lib/tomcat8/webapps"
                     }
                 }
             }
